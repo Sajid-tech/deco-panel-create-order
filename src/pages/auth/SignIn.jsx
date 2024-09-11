@@ -135,7 +135,12 @@ const SignIn = () => {
 
             <div className="flex items-center justify-between gap-2 mt-6">
               <Typography variant="small" className="font-medium text-gray-900">
-                <Link to="/forget-password">Reset Password</Link>
+                <Link
+                  to="https://decopanel.in/session/forgot-password"
+                  target="blank"
+                >
+                  Reset Password
+                </Link>
               </Typography>
             </div>
           </form>

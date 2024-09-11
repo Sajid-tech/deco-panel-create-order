@@ -12,6 +12,7 @@ import Layout from "../../layout/Layout";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import BASE_URL from "../../base/BaseUrl";
+import toast, { Toaster } from "react-hot-toast";
 
 const Home = () => {
   const [showDetails, setShowDetails] = useState(false);
@@ -110,7 +111,7 @@ const Home = () => {
       },
     ]);
     setCount(order_sub_count + 1);
-    setShowDetails((prev) => ({ ...prev, [items.length]: false })); // Initialize visibility state for new item
+    setShowDetails((prev) => ({ ...prev, [items.length]: false }));
   };
 
   const removeItem = (index) => {
@@ -154,7 +155,7 @@ const Home = () => {
         orders_sub_size1: product.products_size1,
         orders_sub_size2: product.products_size2,
         orders_sub_size_unit: product.products_size_unit,
-        orders_sub_quantity: "", // Or keep the existing value
+        orders_sub_quantity: "",
       };
       console.log("Updated items:", updatedItems);
       setItems(updatedItems);
@@ -167,31 +168,58 @@ const Home = () => {
     try {
       const token = localStorage.getItem("token");
       let data = {
-        orders_user_id: order.orders_user_id, // no
-        orders_year: order.orders_year, // no
-        orders_date: order.orders_date, // no
-        orders_count: order_sub_count, // no
+        orders_user_id: order.orders_user_id,
+        orders_year: order.orders_year,
+        orders_date: order.orders_date,
+        orders_count: order_sub_count,
         order_sub_data: items,
       };
 
-      const res = await axios.post(`${BASE_URL}/api/web-create-order`, data, {
+      await axios.post(`${BASE_URL}/api/web-create-order`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      if (res.data.code == "200") {
-        console.log(res.data);
-        alert("done");
+
+      toast.success("Order Created");
+      setTimeout(() => {
         navigate("/order-list");
-      } else {
-        alert("error");
-      }
+      }, 500);
     } catch (error) {
       console.error("Error update on create order ", error);
+      toast.error("Error update on create order");
     }
+  };
+
+  const isFormValid = () => {
+    return (
+      items.every(
+        (item) => item.orders_sub_quantity && item.orders_sub_product_id
+      ) && items.length > 0
+    );
+  };
+
+  const isAddMoreDisabled = () => {
+    return items.some((item) => item.orders_sub_product_id === "");
   };
   return (
     <Layout>
+      <Toaster
+        toastOptions={{
+          success: {
+            style: {
+              background: "white",
+            },
+          },
+          error: {
+            style: {
+              background: "red",
+            },
+          },
+        }}
+        position="top-right"
+        reverseOrder={false}
+      />
       <div className="p-1 lg:p-4 md:p-6 max-w-screen mx-auto ">
         <div className="hidden md:flex justify-between mt-6 gap-4">
           <Button
@@ -290,6 +318,7 @@ const Home = () => {
                     <TextField
                       fullWidth
                       label="Quantity"
+                      required
                       name="orders_sub_quantity"
                       value={item.orders_sub_quantity}
                       onChange={(e) => onChange(e, index)}
@@ -464,6 +493,7 @@ const Home = () => {
                     />
                     <TextField
                       fullWidth
+                      required
                       label="Quantity"
                       name="orders_sub_quantity"
                       value={item.orders_sub_quantity}
@@ -479,7 +509,12 @@ const Home = () => {
             </div>
 
             <div className="flex flex-col md:flex-row justify-between mt-6 gap-4">
-              <Button variant="contained" color="primary" onClick={addItem}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={addItem}
+                disabled={isAddMoreDisabled()}
+              >
                 Add More
               </Button>
               <div className="flex flex-col md:flex-row gap-2">
@@ -487,7 +522,7 @@ const Home = () => {
                   variant="contained"
                   color="primary"
                   type="submit"
-                  disabled={!items.length}
+                  disabled={!isFormValid()}
                   onClick={onSumbit}
                 >
                   Submit

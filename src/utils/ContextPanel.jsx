@@ -36,13 +36,7 @@ const AppProvider = ({ children }) => {
       navigate("/maintenance");
     } else if (isPanelUp?.success) {
       if (token) {
-        const allowedPaths = [
-          "/home",
-          "/profile",
-          "/change-password",
-          "/order-list",
-          "/view-order",
-        ];
+        const allowedPaths = ["/home", "/order-list", "/view-order"];
 
         const isAllowedPath = allowedPaths.some((path) =>
           currentPath.startsWith(path)
@@ -64,11 +58,7 @@ const AppProvider = ({ children }) => {
         //   navigate("/home");
         // }
       } else {
-        if (
-          currentPath === "/" ||
-          currentPath === "/register" ||
-          currentPath === "/forget-password"
-        ) {
+        if (currentPath === "/") {
           navigate(currentPath);
         } else {
           navigate("/"); // Redirect to login if no token
