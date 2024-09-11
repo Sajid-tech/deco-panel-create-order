@@ -120,11 +120,11 @@ const ViewList = () => {
             </table>
           </div>
           <div className="mt-4 flex flex-col  gap-4">
-            <div className=" p-12 border border-black  bg-white  w-1/2 ">
+            <div className=" h-20 border border-black  bg-white  w-1/2  ">
               <span className=" opacity-50">Delevery Address</span>
             </div>
 
-            <div className=" p-12 border border-black  bg-white w-1/2 ">
+            <div className="  h-20 border border-black  bg-white w-1/2 ">
               <span className=" opacity-50">Billing Address</span>
             </div>
           </div>
