@@ -46,22 +46,11 @@ const AppProvider = ({ children }) => {
         } else {
           navigate("/home");
         }
-        // if (
-        //   currentPath === "/home" ||
-        //   currentPath === "/profile" ||
-        //   currentPath === "/change-password" ||
-        //   currentPath === "/order-list" ||
-        //   currentPath === "/view-order/:id"
-        // ) {
-        //   navigate(currentPath);
-        // } else {
-        //   navigate("/home");
-        // }
       } else {
         if (currentPath === "/") {
           navigate(currentPath);
         } else {
-          navigate("/"); // Redirect to login if no token
+          navigate("/");
         }
       }
     }

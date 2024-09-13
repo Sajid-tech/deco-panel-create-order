@@ -19,11 +19,6 @@ const App = () => {
           element={<ProtectedRoute element={<OrderList />} />}
         />
         <Route path="/view-order/:id" element={<ViewList />} />
-
-        {/* <Route
-          path="*"
-          element={<ProtectedRoute element={<Navigate to="/" />} />}
-        /> */}
       </Routes>
     </>
   );

@@ -22,19 +22,16 @@ const SignIn = () => {
 
     setLoading(true);
 
-    //create a formData object and append state values
     const formData = new FormData();
     formData.append("username", email);
     formData.append("password", password);
 
     try {
-      // Send POST request to login API with form data
       const res = await axios.post(`${BASE_URL}/api/web-login`, formData);
 
       if (res.status === 200) {
         const token = res.data.UserInfo?.token;
         if (token) {
-          // Store the token in localStorage
           localStorage.setItem("token", token);
           navigate("/home");
         } else {

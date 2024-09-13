@@ -32,7 +32,7 @@ const SelectProduct = ({ onSelect, itemIndex }) => {
   const handleSelect = (id) => {
     const product = selectProducts.find((product) => product.id === id);
     if (product && itemIndex !== null) {
-      onSelect(product, itemIndex); // Pass both product and index
+      onSelect(product, itemIndex);
     }
   };
 
