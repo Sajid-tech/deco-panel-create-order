@@ -172,7 +172,7 @@ const ViewList = () => {
           }
 
           tbody tr:nth-child(even) {
-            background-color: #EAF6FF; 
+            background-color: white; 
           }
 
           tbody tr:nth-child(odd) {
