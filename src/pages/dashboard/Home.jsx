@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { Button, TextField, MenuItem, IconButton } from "@mui/material";
 import {
@@ -51,6 +51,7 @@ const Home = () => {
     },
   ]);
 
+  const quantityRefs = useRef([]);
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -159,6 +160,10 @@ const Home = () => {
       };
       console.log("Updated items:", updatedItems);
       setItems(updatedItems);
+      if (quantityRefs.current[index +1 ]) {
+        console.table("index",index)
+        quantityRefs.current[index + 1].focus();
+      }
     }
     handleCloseDialog();
   };
@@ -296,16 +301,18 @@ const Home = () => {
                 InputLabelProps={{ shrink: true }}
               />
             </div>
-            <hr />
+            <hr className="bg-black mb-2" />
 
             {/* Mobile View */}
-            <div className="block md:hidden">
-              <div className="flex flex-col gap-4">
+            <div className=" md:hidden">
+              <div className=" gap-4">
                 {items.map((item, index) => (
-                  <div
+                 <div className=" flex flex-col">
+                   <div
                     key={index}
-                    className="bg-white p-4 rounded-lg shadow-lg mb-4"
+                    className=" p-2 flex flex-row gap-2  rounded-lg  "
                   >
+                    <div>
                     <TextField
                       fullWidth
                       label="Products"
@@ -313,8 +320,16 @@ const Home = () => {
                       value={item.orders_sub_product_id}
                       onClick={() => handleOpenDialog(index)}
                       onChange={(e) => onChange(e, index)}
-                      InputProps={{ style: { border: "none" } }}
+                      InputProps={{ style: { border: "none",height:"40px" } }}
+                      className=""
                     />
+                    <div className="">
+                   
+                   
+                   
+                    </div>
+                    </div>
+                    <div>
                     <TextField
                       fullWidth
                       label="Quantity"
@@ -322,22 +337,29 @@ const Home = () => {
                       name="orders_sub_quantity"
                       value={item.orders_sub_quantity}
                       onChange={(e) => onChange(e, index)}
-                      InputProps={{ style: { border: "none" } }}
+                      inputRef={(el) => (quantityRefs.current[index] = el)} 
+                      InputProps={{ style: { border: "none",height:"40px" } }}
                     />
+                  
+                    </div>
+                    <div>
                     <IconButton onClick={() => removeItem(index)}>
                       <DeleteIcon />
                     </IconButton>
+                    
+                    </div>
 
                     {/* Toggle Button for Each Item */}
-                    <Button
+                    {/* <Button
                       className="mb-4"
+                      
                       color="primary"
                       variant="outlined"
                       onClick={() => toggleDetails(index)}
                       style={{ width: "100%" }}
                     >
                       {showDetails[index] ? "Close Details" : "Other Details"}
-                    </Button>
+                    </Button> */}
 
                     {/* Details for Each Item */}
                     {showDetails[index] && (
@@ -409,6 +431,13 @@ const Home = () => {
                       </div>
                     )}
                   </div>
+                  <div className=" flex justify-between gap-2">
+                  <span className=" text-blue-900 text-xs font-thin">{item.orders_sub_catg_id}-{item.orders_sub_sub_catg_id}</span>
+                  <span className=" text-black text-xs font-thin">{item.orders_sub_brand}-{item.orders_sub_thickness} {item.orders_sub_unit}</span>
+                  <span className=" text-blue-900 text-xs font-thin">{item.orders_sub_size1}X{item.orders_sub_size2} {item.orders_sub_size_unit}</span>
+                  </div>
+                  <hr  className="border-b border-blue-900 mt-1 mb-1"/>
+                 </div>
                 ))}
               </div>
             </div>
@@ -432,6 +461,7 @@ const Home = () => {
                       label="Category"
                       name="orders_sub_catg_id"
                       value={item.orders_sub_catg_id}
+                      // inputRef={(el) => (quantityRefs.current[index] = el)} 
                       disabled
                       InputProps={{ style: { border: "none" } }}
                     />

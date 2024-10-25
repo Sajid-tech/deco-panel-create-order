@@ -44,30 +44,52 @@ const SelectProduct = ({ onSelect, itemIndex }) => {
         options: {
           filter: true,
           sort: true,
+          customBodyRender: (value, tableMeta) => {
+            const product_category = tableMeta.rowData[0];
+
+            const product_subcategory = tableMeta.rowData[1];
+            const products_brand = tableMeta.rowData[2];
+            const products_thickness = tableMeta.rowData[3];
+            const products_size1 = tableMeta.rowData[4];
+            const products_size = tableMeta.rowData[5];
+            const products_size2 = tableMeta.rowData[6];
+            const products_unit = tableMeta.rowData[7];
+            return (
+              <div className=" p-[5px]]" >
+                <p className=" text-blue-900 text-xs">
+                  {product_category} - {product_subcategory}
+                </p>
+                <p className=" text-black text-xs">
+                  {products_brand}- {products_thickness} {products_size1}
+                </p>
+                <p className=" text-blue-900 text-xs">
+                 {products_size}X{products_size2}
+                {products_unit}
+                </p>
+              </div>
+            );
+          },
         },
       },
       {
         name: "product_sub_category",
         label: "Sub Category",
         options: {
-          filter: true,
-          sort: false,
+          display: false,
         },
       },
       {
         name: "products_brand",
         label: "Brand",
         options: {
-          filter: true,
-          sort: false,
+          display: false,
         },
       },
       {
         name: "products_thickness",
         label: "Thickness",
         options: {
-          filter: true,
-          sort: false,
+          display: false,
           customBodyRender: (value, tableMeta) => {
             const products_thickness = tableMeta.rowData[3];
             const products_unit = tableMeta.rowData[4];
@@ -87,8 +109,7 @@ const SelectProduct = ({ onSelect, itemIndex }) => {
         name: "products_size1",
         label: "Size",
         options: {
-          filter: true,
-          sort: false,
+          display: false,
           customBodyRender: (value, tableMeta) => {
             const products_size1 = tableMeta.rowData[5];
             const products_size2 = tableMeta.rowData[6];
@@ -140,8 +161,7 @@ const SelectProduct = ({ onSelect, itemIndex }) => {
   const options = {
     selectableRows: "none",
     elevation: 0,
-    rowsPerPage: 5,
-    rowsPerPageOptions: [5, 10, 25],
+
     responsive: "standard",
     viewColumns: false,
     download: false,
