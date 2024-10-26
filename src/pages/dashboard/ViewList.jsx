@@ -37,11 +37,22 @@ const ViewList = () => {
   }, [1]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex justify-center items-center h-56">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
   }
 
   if (!viewOrder) {
-    return <div>No order found.</div>;
+    return (
+      <Layout>
+      <div className="flex justify-center flex-col mt-48 items-center h-56">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+        <div className="text-gray-400 animate-pulse">Loading</div>
+      </div>
+      </Layout>
+    );
   }
 
   return (

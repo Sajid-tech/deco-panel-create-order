@@ -36,7 +36,7 @@ const AppProvider = ({ children }) => {
       navigate("/maintenance");
     } else if (isPanelUp?.success) {
       if (token) {
-        const allowedPaths = ["/home", "/order-list", "/view-order"];
+        const allowedPaths = ["/home", "/order-list", "/view-order", "/user"];
 
         const isAllowedPath = allowedPaths.some((path) =>
           currentPath.startsWith(path)

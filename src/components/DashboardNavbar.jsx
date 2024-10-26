@@ -15,7 +15,7 @@ const DashboardNavbar = () => {
   return (
     <Navbar
       color="white"
-      className="fixed top-0 left-0 w-full z-40 py-3 bg-gradient-to-br from-gray-800 text-white to-gray-700 shadow-lg border-none"
+      className="fixed top-0 left-0 w-full z-40 py-3 bg-blue-600   text-white  shadow-lg border-none"
       fullWidth
     >
       <div className="flex justify-between gap-6 flex-row md:items-center">

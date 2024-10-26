@@ -1,86 +1,181 @@
-import React, { useState, useEffect, useRef } from "react";
-import { TextField, IconButton } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
+import { Button, TextField } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
+import { FaCheck, FaTimes } from "react-icons/fa";
+import Layout from "../../../layout/Layout";
+import axios from "axios";
+import BASE_URL from "../../../base/BaseUrl";
+import { ContextPanel } from "../../../utils/ContextPanel";
+import toast, { Toaster } from "react-hot-toast";
 
-const OrderForm = () => {
-  const [items, setItems] = useState([
-    {
-      orders_sub_product_id: "",
-      orders_sub_catg_id: "",
-      orders_sub_sub_catg_id: "",
-      orders_sub_brand: "",
-      orders_sub_thickness: "",
-      orders_sub_unit: "",
-      orders_sub_size1: "",
-      orders_sub_size2: "",
-      orders_sub_size_unit: "",
-      orders_sub_quantity: "",
-    },
-  ]);
+const AddManufacturer = () => {
+  <span onClick={()=>navigate(`/user`)} className="bg-red-600 w-full p-4">not in list</span>
+  const [manufacturer, setManufacturer] = useState({
+    manufacturer_name: "",
+    manufacturer_mobile: "",
+    manufacturer_email: "",
+    manufacturer_address: "",
+    manufacturer_state: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const { isPanelUp } = useContext(ContextPanel);
+  const navigate = useNavigate();
 
-  // refs array for each item
-  const quantityRefs = useRef([]);
-
-  const handleSelectProduct = (product, index) => {
-    console.log("Selected product:", product);
-    console.log("Item index:", index);
-
-    if (index !== null) {
-      const updatedItems = [...items];
-      updatedItems[index] = {
-        orders_sub_product_id: product.id,
-        orders_sub_catg_id: product.product_category,
-        orders_sub_sub_catg_id: product.product_sub_category,
-        orders_sub_brand: product.products_brand,
-        orders_sub_thickness: product.products_thickness,
-        orders_sub_unit: product.products_unit,
-        orders_sub_size1: product.products_size1,
-        orders_sub_size2: product.products_size2,
-        orders_sub_size_unit: product.products_size_unit,
-        orders_sub_quantity: "",
-      };
-      setItems(updatedItems);
-
-      // Focus on the next quantity TextField if it exists
-      if (quantityRefs.current[index + 1]) {
-        quantityRefs.current[index + 1].focus();
-      }
-    }
+  const onInputChange = (e) => {
+    setManufacturer({ ...manufacturer, [e.target.name]: e.target.value });
   };
 
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    if (!isPanelUp) {
+      navigate("/maintenance");
+      return;
+    }
+    setLoading(true);
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.post(
+        `${BASE_URL}/api/web-create-manufacturer`,
+        manufacturer,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.data.code == "200") {
+        toast.success("Manufacturer Added");
+        navigate("/manufacturer");
+      } else {
+        toast.error("error");
+      }
+    } catch (error) {
+      console.error("Error creating maufacturer", error);
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
-    <form>
-      {items.map((item, index) => (
-        <div key={index}>
-          <TextField
-            fullWidth
-            label="Products"
-            name="orders_sub_product_id"
-            value={item.orders_sub_product_id}
-            onClick={() => handleOpenDialog(index)}
-            onChange={(e) => onChange(e, index)}
-            InputProps={{ style: { border: "none" } }}
-          />
-          <span className=" text-gray-700 text-xs font-thin">
-            {item.orders_sub_sub_catg_id} - {item.orders_sub_brand}
-          </span>
-          <TextField
-            fullWidth
-            label="Quantity"
-            required
-            name="orders_sub_quantity"
-            value={item.orders_sub_quantity}
-            onChange={(e) => onChange(e, index)}
-            InputProps={{ style: { border: "none" } }}
-            inputRef={(el) => (quantityRefs.current[index] = el)} // Set ref
-          />
-          <IconButton onClick={() => removeItem(index)}>
-            <DeleteIcon />
-          </IconButton>
+    <Layout>
+      <Toaster
+        toastOptions={{
+          success: {
+            style: {
+              background: "green",
+            },
+          },
+          error: {
+            style: {
+              background: "red",
+            },
+          },
+        }}
+        position="top-right"
+        reverseOrder={false}
+      />
+      <div className="p-6">
+        <div className="mb-4">
+          <h3 className="text-2xl font-bold">Add Manufacturer</h3>
         </div>
-      ))}
-    </form>
+        <div className="grid grid-cols-1">
+          <div className="bg-white p-6 shadow rounded-md">
+            <form id="addIndiv" autoComplete="off" onSubmit={onSubmit}>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                  <div className="mb-4">
+                    <TextField
+                      fullWidth
+                      required
+                      label="Full Name"
+                      autoComplete="Name"
+                      name="manufacturer_name"
+                      value={manufacturer.manufacturer_name}
+                      onChange={onInputChange}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <div className="mb-4">
+                    <TextField
+                      fullWidth
+                      label="Mobile"
+                      autoComplete="Name"
+                      name="manufacturer_mobile"
+                      value={manufacturer.manufacturer_mobile}
+                      onChange={onInputChange}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <div className="mb-4">
+                    <TextField
+                      fullWidth
+                      label="Email"
+                      type="email"
+                      autoComplete="Name"
+                      name="manufacturer_email"
+                      value={manufacturer.manufacturer_email}
+                      onChange={onInputChange}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="md:col-span-2">
+                  <div className="mb-4">
+                    <TextField
+                      fullWidth
+                      label="Address"
+                      autoComplete="Name"
+                      name="manufacturer_address"
+                      value={manufacturer.manufacturer_address}
+                      onChange={onInputChange}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <div className="mb-4">
+                    <TextField
+                      fullWidth
+                      label="State"
+                      autoComplete="Name"
+                      name="manufacturer_state"
+                      value={manufacturer.manufacturer_state}
+                      onChange={onInputChange}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex space-x-4">
+                <Button
+                  type="submit"
+                  className="flex items-center bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                  disabled={loading}
+                >
+                  {loading ? (
+                    "Submitting..."
+                  ) : (
+                    <>
+                      <FaCheck className="mr-2" />
+                      Submit
+                    </>
+                  )}
+                </Button>
+                <Link to='/manufacturer'>
+                  <Button className="flex items-center bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400">
+                    <FaTimes className="mr-2" />
+                    Cancel
+                  </Button>
+                </Link>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </Layout>
   );
 };
 
-export default OrderForm;
+export default AddManufacturer;

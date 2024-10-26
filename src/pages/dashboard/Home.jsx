@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import BASE_URL from "../../base/BaseUrl";
 import toast, { Toaster } from "react-hot-toast";
+import { DialogFooter } from "@material-tailwind/react";
 
 const Home = () => {
   const [showDetails, setShowDetails] = useState(false);
@@ -63,7 +64,7 @@ const Home = () => {
           },
         });
         setProfileData(response.data.profile);
-        console.log("setprofile data", response.data.profile);
+        console.table("profileData", response.data.profile);
       } catch (error) {
         console.error("error while fetching select product ", error);
       } finally {
@@ -168,6 +169,22 @@ const Home = () => {
     handleCloseDialog();
   };
 
+  //
+
+  const handleUserChange = (event) => {
+    const selectedValue = event.target.value;
+
+    // If "Not in List" is selected, navigate to the Create User page
+    if (selectedValue === 45) {  // Assuming the ID for "Not in List" is 45
+      navigate(`/user/${selectedValue}`);
+    } else {
+      onInputChange(event); // Continue with the normal onChange handling
+    }
+  };
+
+
+  //
+
   const onSumbit = async (e) => {
     e.preventDefault();
     try {
@@ -225,7 +242,7 @@ const Home = () => {
         position="top-right"
         reverseOrder={false}
       />
-      <div className="p-1 lg:p-4 md:p-6 max-w-screen mx-auto ">
+      <div className="p-1  lg:p-4 md:p-6 max-w-screen mx-auto ">
         <div className="hidden md:flex justify-between mt-6 gap-4">
           <Button
             variant="contained"
@@ -268,17 +285,20 @@ const Home = () => {
           </Button>
         </div>
 
-        <div className="bg-white mt-4 p-4 md:p-6 rounded-lg shadow-lg">
+        <div className="  mt-2 p-2 md:p-6  ">
           <form id="addIndiv" autoComplete="off">
-            <div className="flex flex-col lg:flex-row gap-4 mb-6">
+            <div className="flex flex-col lg:flex-row gap-4 mb-6 border-2 border-dashed bg-white border-red-200 p-2 rounded-lg shadow-lg">
+
               <TextField
                 fullWidth
                 label="User"
                 select
+                InputProps={{ style: { border: "2px",height:"40px", } }}
                 name="orders_user_id"
-                onChange={onInputChange}
+                onChange={handleUserChange}
                 required
               >
+                
                 {profileData && profileData.length > 0 ? (
                   profileData.map((source) => (
                     <MenuItem key={source.id} value={source.id}>
@@ -289,22 +309,26 @@ const Home = () => {
                   <MenuItem disabled>No profiles available</MenuItem>
                 )}
               </TextField>
+             
+
+             
 
               <TextField
                 fullWidth
                 type="date"
                 label="Date"
                 name="orders_date"
+                InputProps={{ style: { border: "2px",height:"40px", } }}
                 value={order.orders_date}
                 onChange={onInputChange}
                 required
                 InputLabelProps={{ shrink: true }}
               />
             </div>
-            <hr className="bg-black mb-2" />
+            {/* <hr className="bg-black mb-2" /> */}
 
             {/* Mobile View */}
-            <div className=" md:hidden">
+            <div className=" md:hidden border-2 border-blue-200 border-dashed bg-white p-2 rounded-lg shadow-lg">
               <div className=" gap-4">
                 {items.map((item, index) => (
                  <div className=" flex flex-col">
@@ -320,7 +344,7 @@ const Home = () => {
                       value={item.orders_sub_product_id}
                       onClick={() => handleOpenDialog(index)}
                       onChange={(e) => onChange(e, index)}
-                      InputProps={{ style: { border: "none",height:"40px" } }}
+                      InputProps={{ style: { border: "2px",height:"40px", } }}
                       className=""
                     />
                     <div className="">
@@ -342,9 +366,9 @@ const Home = () => {
                     />
                   
                     </div>
-                    <div>
-                    <IconButton onClick={() => removeItem(index)}>
-                      <DeleteIcon />
+                    <div className="border rounded-lg border-gray-400 bg-red-50/50">
+                    <IconButton  onClick={() => removeItem(index)}>
+                      <DeleteIcon  className="text-red-600 w-5 h-5 hover:text-blue-600"/>
                     </IconButton>
                     
                     </div>
@@ -431,12 +455,12 @@ const Home = () => {
                       </div>
                     )}
                   </div>
-                  <div className=" flex justify-between gap-2">
-                  <span className=" text-blue-900 text-xs font-thin">{item.orders_sub_catg_id}-{item.orders_sub_sub_catg_id}</span>
-                  <span className=" text-black text-xs font-thin">{item.orders_sub_brand}-{item.orders_sub_thickness} {item.orders_sub_unit}</span>
-                  <span className=" text-blue-900 text-xs font-thin">{item.orders_sub_size1}X{item.orders_sub_size2} {item.orders_sub_size_unit}</span>
+                  <div className=" flex  justify-around gap-2">
+                  <span className=" text-black  rounded-lg p-1 text-[10px] font-thin">{item.orders_sub_catg_id}&nbsp;{item.orders_sub_sub_catg_id}</span>
+                  <span className="  p-1 rounded-lg text-black text-[10px] font-thin">{item.orders_sub_brand}&nbsp;{item.orders_sub_thickness}{item.orders_sub_unit}</span>
+                  <span className="  rounded-lg p-1 text-black text-[10px] font-thin">{item.orders_sub_size1}*{item.orders_sub_size2} {item.orders_sub_size_unit}</span>
                   </div>
-                  <hr  className="border-b border-blue-900 mt-1 mb-1"/>
+                  {/* <hr  className="border-b border-blue-200 mt-1 mb-1"/> */}
                  </div>
                 ))}
               </div>
@@ -538,7 +562,7 @@ const Home = () => {
               </div>
             </div>
 
-            <div className="flex flex-col md:flex-row justify-between mt-6 gap-4">
+            <div className="flex flex-row mb-10 lg:mb-0 md:flex-row justify-between mt-6 gap-4 border-2 border-dashed bg-white border-purple-200    p-2 rounded-lg shadow-lg">
               <Button
                 variant="contained"
                 color="primary"
@@ -559,21 +583,29 @@ const Home = () => {
                 </Button>
               </div>
             </div>
+           
           </form>
+       
         </div>
+       
       </div>
-      <Dialog open={openDialog} onClose={handleCloseDialog}>
-        <DialogContent>
-          <SelectProduct itemIndex={editIndex} onSelect={handleSelectProduct} />
-        </DialogContent>
-        <DialogActions>
-          <Button variant="outlined" color="error" onClick={handleCloseDialog}>
-            Cancel
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <Dialog  open={openDialog} onClose={handleCloseDialog}>
+<DialogContent >
+  <SelectProduct itemIndex={editIndex} onSelect={handleSelectProduct} />
+</DialogContent>
+<DialogActions>
+  <Button variant="outlined" color="error" onClick={handleCloseDialog}>
+    Cancel
+  </Button>
+</DialogActions>
+</Dialog>
+     
+     
     </Layout>
   );
 };
+
+
+
 
 export default Home;

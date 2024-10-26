@@ -5,6 +5,7 @@ import Maintenance from "./pages/maintenance/Maintenance";
 import ProtectedRoute from "./components/ProtectedRoute";
 import OrderList from "./pages/dashboard/OrderList";
 import ViewList from "./pages/dashboard/ViewList";
+import UserCreate from "./pages/dashboard/UserCreate";
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
           element={<ProtectedRoute element={<OrderList />} />}
         />
         <Route path="/view-order/:id" element={<ViewList />} />
+        <Route path="/user/:id" element={<UserCreate />} />
       </Routes>
     </>
   );

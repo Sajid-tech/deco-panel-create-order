@@ -14,12 +14,15 @@ export function Footer() {
     navigate("/order-list");
   };
 
+  // className="fixed bottom-0 left-0 w-full py-2 bg-gradient-to-r from-white via-gray-100 to-white shadow-md border-t border-gray-200 md:hidden"
   return (
-    <footer className="fixed bottom-0 left-0 w-full py-2 bg-gradient-to-r from-white via-gray-100 to-white shadow-md border-t border-gray-200 md:hidden">
+    <div className=" fixed bottom-0  border border-dashed border-black p-1  md:hidden mb-[12px] rounded-xl transition-all
+         z-40  bg-gradient-to-br from-white text-white to-blue-300   ">
+    <footer >
       <div className="flex items-center justify-between px-4">
         <div onClick={handleHome} className="flex items-center space-x-2">
           <div className="p-2 bg-green-500 rounded-full shadow-sm border border-blue-200 flex items-center justify-center transition-transform transform hover:scale-110 hover:bg-blue-600">
-            <FaPlusCircle className="text-white w-4 h-4" />
+            {/* <FaPlusCircle className="text-white w-2 h-2" /> */}
           </div>
           <Button className=" bg-black font-medium">Create Order</Button>
         </div>
@@ -33,11 +36,12 @@ export function Footer() {
         <div onClick={handleOrder} className="flex items-center space-x-2">
           <Button className="text-gray-700 font-medium">Order List</Button>
           <div className="p-2 bg-red-500 rounded-full shadow-sm border border-blue-200 flex items-center justify-center transition-transform transform hover:scale-110 hover:bg-blue-600">
-            <FaListAlt className="text-white w-4 h-4" />
+            {/* <FaListAlt className="text-white w-4 h-4" /> */}
           </div>
         </div>
       </div>
     </footer>
+    </div>
   );
 }
 
