@@ -197,15 +197,16 @@ const Home = () => {
         order_sub_data: items,
       };
 
-      await axios.post(`${BASE_URL}/api/web-create-order`, data, {
+      const res = await axios.post(`${BASE_URL}/api/web-create-order`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
+      console.log("product data",res)
 
       toast.success("Order Created");
       setTimeout(() => {
-        navigate("/order-list");
+        navigate(`/view-order/${res.data.latest_id}`);
       }, 500);
     } catch (error) {
       console.error("Error update on create order ", error);
@@ -358,6 +359,7 @@ const Home = () => {
                       fullWidth
                       label="Quantity"
                       required
+                      type="digit"
                       name="orders_sub_quantity"
                       value={item.orders_sub_quantity}
                       onChange={(e) => onChange(e, index)}
