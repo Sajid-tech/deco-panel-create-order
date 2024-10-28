@@ -16,7 +16,7 @@ export function Footer() {
 
   // className="fixed bottom-0 left-0 w-full py-2 bg-gradient-to-r from-white via-gray-100 to-white shadow-md border-t border-gray-200 md:hidden"
   return (
-    <div className=" border-2   border-black  ">
+    <div className=" fixed bottom-0 left-0 w-full py-2 bg-gradient-to-r from-white via-gray-100 to-white shadow-md border-t border-red-200 ">
    
       <div className=" flex justify-around items-center ">
         <div onClick={handleHome} className="flex items-center space-x-2">

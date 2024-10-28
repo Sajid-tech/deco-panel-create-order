@@ -13,9 +13,9 @@ const Layout = ({ children }) => {
       <div className="p-4">
         <DashboardNavbar />
         <main className="flex-1  mt-12">{children}</main>
-        <div className=" mt-40">
+      
         <Footer />
-        </div>
+     
       </div>
       </div>
     </div>
