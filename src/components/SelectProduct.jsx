@@ -45,17 +45,19 @@ const SelectProduct = ({ onSelect, itemIndex }) => {
           filter: true,
           sort: true,
           customBodyRender: (value, tableMeta) => {
-            const product_category = tableMeta.rowData[0];
-
-            const product_subcategory = tableMeta.rowData[1];
-            const products_brand = tableMeta.rowData[2];
-            const products_thickness = tableMeta.rowData[3];
-            const products_size1 = tableMeta.rowData[4];
-            const products_size = tableMeta.rowData[5];
-            const products_size2 = tableMeta.rowData[6];
-            const products_unit = tableMeta.rowData[7];
+          
+            const [
+              product_category,
+              product_subcategory,
+              products_brand,
+              products_thickness,
+              products_size1,
+              products_size,
+              products_size2,
+              products_unit
+            ] = tableMeta.rowData;
             return (
-              <div className=" p-[5px]]" >
+              <div className=" p-[5px]]" key={`product-${tableMeta.rowIndex}`} >
                 <p className=" text-blue-900 text-xs">
                   {product_category} - {product_subcategory}
                 </p>
@@ -75,21 +77,26 @@ const SelectProduct = ({ onSelect, itemIndex }) => {
         name: "product_sub_category",
         label: "Sub Category",
         options: {
-          display: false,
+          display: "exclude",
+          searchable: true,
+          filter: true,
         },
       },
       {
         name: "products_brand",
         label: "Brand",
         options: {
-          display: false,
+          display: "exclude",
+          searchable: true,
+          filter: true,
         },
       },
       {
         name: "products_thickness",
         label: "Thickness",
         options: {
-          display: false,
+          display: "exclude",
+          searchable: true,
           customBodyRender: (value, tableMeta) => {
             const products_thickness = tableMeta.rowData[3];
             const products_unit = tableMeta.rowData[4];
@@ -101,7 +108,9 @@ const SelectProduct = ({ onSelect, itemIndex }) => {
         name: "products_unit",
         label: "Unit",
         options: {
-          display: false,
+          display: "exclude",
+          filter: true,
+          searchable: true,
         },
       },
 
@@ -109,7 +118,9 @@ const SelectProduct = ({ onSelect, itemIndex }) => {
         name: "products_size1",
         label: "Size",
         options: {
-          display: false,
+          display: "exclude",
+          filter: true,
+          searchable: true,
           customBodyRender: (value, tableMeta) => {
             const products_size1 = tableMeta.rowData[5];
             const products_size2 = tableMeta.rowData[6];
@@ -123,14 +134,18 @@ const SelectProduct = ({ onSelect, itemIndex }) => {
         name: "products_size2",
         label: "size2",
         options: {
-          display: false,
+          display: "exclude",
+          searchable: true,
+          filter: true,
         },
       },
       {
         name: "products_size_unit",
         label: "size unit",
         options: {
-          display: false,
+          display: "exclude",
+          searchable: true,
+          filter: true,
         },
       },
 
@@ -167,6 +182,8 @@ const SelectProduct = ({ onSelect, itemIndex }) => {
     download: false,
     print: false,
     filter: false,
+    search: true,
+    
   };
 
   const data = useMemo(

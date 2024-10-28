@@ -244,7 +244,7 @@ const Home = () => {
         reverseOrder={false}
       />
       <div className="p-1  lg:p-4 md:p-6 max-w-screen mx-auto ">
-        <div className="hidden md:flex justify-between mt-6 gap-4">
+        {/* <div className="hidden md:flex justify-between mt-6 gap-4">
           <Button
             variant="contained"
             sx={{
@@ -284,7 +284,7 @@ const Home = () => {
           >
             Order List
           </Button>
-        </div>
+        </div> */}
 
         <div className="  mt-2 p-2 md:p-6  ">
           <form id="addIndiv" autoComplete="off">
