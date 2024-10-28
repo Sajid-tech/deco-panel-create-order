@@ -12,8 +12,8 @@ import Layout from "../../layout/Layout";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import BASE_URL from "../../base/BaseUrl";
-import toast, { Toaster } from "react-hot-toast";
 import { DialogFooter } from "@material-tailwind/react";
+import { toast } from "react-toastify";
 
 const Home = () => {
   const [showDetails, setShowDetails] = useState(false);
@@ -187,6 +187,11 @@ const Home = () => {
 
   const onSumbit = async (e) => {
     e.preventDefault();
+    const form = document.getElementById("addIndiv");
+  if(!form.checkValidity()){
+    toast.error("Fill all required")
+    return
+  }
     try {
       const token = localStorage.getItem("token");
       let data = {
@@ -227,40 +232,28 @@ const Home = () => {
   };
   return (
     <Layout>
-      <Toaster
-        toastOptions={{
-          success: {
-            style: {
-              background: "white",
-            },
-          },
-          error: {
-            style: {
-              background: "red",
-            },
-          },
-        }}
-        position="top-right"
-        reverseOrder={false}
-      />
+     
       <div className="p-1  lg:p-4 md:p-6 max-w-screen mx-auto ">
-        {/* <div className="hidden md:flex justify-between mt-6 gap-4">
+        <div className="hidden md:flex justify-between mt-6 gap-4">
           <Button
             variant="contained"
             sx={{
               width: "50%",
+              height:"40px",
               background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
               borderRadius: "4px",
               boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
               padding: "10px 20px",
               fontSize: "1.2rem",
               transition: "all 0.3s",
+              
               "&:hover": {
                 backgroundColor: "#FF8E53",
                 transform: "translateY(-3px)",
               },
             }}
             onClick={handleCreateOrder}
+            
           >
             Create Order
           </Button>
@@ -271,6 +264,7 @@ const Home = () => {
               width: "50%",
               background: "linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)",
               borderRadius: "4px",
+              height:"40px",
               boxShadow: "0 3px 5px 2px rgba(33, 203, 243, .3)",
               padding: "10px 20px",
               fontSize: "1.2rem",
@@ -284,11 +278,11 @@ const Home = () => {
           >
             Order List
           </Button>
-        </div> */}
+        </div>
 
-        <div className="  mt-2 p-2 md:p-6  ">
+        <div className="  mt-2 p-2 md:p-6 lg:bg-white  lg:rounded-lg lg:shadow-lg lg:shadow-green-100 ">
           <form id="addIndiv" autoComplete="off">
-            <div className="flex flex-col lg:flex-row gap-4 mb-6 border-2  bg-white border-red-200 p-2 rounded-lg shadow-lg">
+            <div className="flex flex-col lg:flex-row gap-4 mb-6 border-2 border-red-200 lg:border-b-2 lg:border-dashed lg:border-green-200 bg-white  p-2 rounded-lg shadow-lg">
 
               <TextField
                 fullWidth
@@ -469,7 +463,7 @@ const Home = () => {
             </div>
 
             {/* //larger viwe  */}
-            <div className="hidden md:block p-6">
+            <div className="hidden md:block  border-b-2 border-blue-700 border-dashed bg-white p-2 rounded-lg shadow-lg">
               <div className="flex flex-col gap-4">
                 {items.map((item, index) => (
                   <div key={index} className="flex flex-col lg:flex-row gap-4">
@@ -479,8 +473,9 @@ const Home = () => {
                       name="orders_sub_product_id"
                       onClick={() => handleOpenDialog(index)}
                       value={item.orders_sub_product_id}
+                      
                       onChange={(e) => onChange(e, index)}
-                      InputProps={{ style: { border: "none" } }}
+                      InputProps={{ style: { border: "2px",height:"40px", } }}
                     />
                     <TextField
                       fullWidth
@@ -489,7 +484,7 @@ const Home = () => {
                       value={item.orders_sub_catg_id}
                       // inputRef={(el) => (quantityRefs.current[index] = el)} 
                       disabled
-                      InputProps={{ style: { border: "none" } }}
+                      InputProps={{ style: { border: "2px",height:"40px", } }}
                     />
                     <TextField
                       fullWidth
@@ -497,7 +492,7 @@ const Home = () => {
                       name="orders_sub_sub_catg_id"
                       value={item.orders_sub_sub_catg_id}
                       disabled
-                      InputProps={{ style: { border: "none" } }}
+                      InputProps={{ style: { border: "2px",height:"40px", } }}
                     />
                     <TextField
                       fullWidth
@@ -505,7 +500,7 @@ const Home = () => {
                       name="orders_sub_brand"
                       value={item.orders_sub_brand}
                       disabled
-                      InputProps={{ style: { border: "none" } }}
+                      InputProps={{ style: { border: "2px",height:"40px", } }}
                     />
                     <TextField
                       fullWidth
@@ -513,7 +508,7 @@ const Home = () => {
                       name="orders_sub_thickness"
                       value={item.orders_sub_thickness}
                       disabled
-                      InputProps={{ style: { border: "none" } }}
+                      InputProps={{ style: { border: "2px",height:"40px", } }}
                     />
                     <TextField
                       fullWidth
@@ -521,7 +516,7 @@ const Home = () => {
                       name="orders_sub_unit"
                       value={item.orders_sub_unit}
                       disabled
-                      InputProps={{ style: { border: "none" } }}
+                      InputProps={{ style: { border: "2px",height:"40px", } }}
                     />
                     <TextField
                       fullWidth
@@ -529,7 +524,7 @@ const Home = () => {
                       name="orders_sub_size1"
                       value={item.orders_sub_size1}
                       disabled
-                      InputProps={{ style: { border: "none" } }}
+                      InputProps={{ style: { border: "2px",height:"40px", } }}
                     />
                     <TextField
                       fullWidth
@@ -537,7 +532,7 @@ const Home = () => {
                       name="orders_sub_size2"
                       value={item.orders_sub_size2}
                       disabled
-                      InputProps={{ style: { border: "none" } }}
+                      InputProps={{ style: { border: "2px",height:"40px", } }}
                     />
                     <TextField
                       fullWidth
@@ -545,7 +540,7 @@ const Home = () => {
                       name="orders_sub_size_unit"
                       value={item.orders_sub_size_unit}
                       disabled
-                      InputProps={{ style: { border: "none" } }}
+                      InputProps={{ style: { border: "2px",height:"40px", } }}
                     />
                     <TextField
                       fullWidth
@@ -553,8 +548,9 @@ const Home = () => {
                       label="Quantity"
                       name="orders_sub_quantity"
                       value={item.orders_sub_quantity}
+                      type="number"
                       onChange={(e) => onChange(e, index)}
-                      InputProps={{ style: { border: "none" } }}
+                      InputProps={{ style: { border: "2px",height:"40px", } }}
                     />
                     <IconButton onClick={() => removeItem(index)}>
                       <DeleteIcon />
@@ -564,7 +560,7 @@ const Home = () => {
               </div>
             </div>
 
-            <div className="flex flex-row mb-10 lg:mb-0 md:flex-row justify-between mt-6 gap-4 border-2  bg-white border-purple-200    p-2 rounded-lg shadow-lg">
+            <div className="flex flex-row mb-10 lg:mb-0 md:flex-row justify-between mt-6 gap-4 border-2  bg-white border-purple-200  lg:border-b-2 lg:border-dashed lg:border-purple-200   p-2 rounded-lg shadow-lg">
               <Button
                 variant="contained"
                 color="primary"
