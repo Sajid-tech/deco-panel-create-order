@@ -48,6 +48,26 @@ const OrderList = () => {
   const columns = useMemo(
     () => [
       {
+        name: "id",
+        label: "Action",
+        options: {
+          filter: false,
+          sort: false,
+          customBodyRender: (id) => {
+            return (
+              <div className="flex items-center space-x-2">
+                <Link
+                  to={`/view-order/${id}`}
+                  className="bg-blue-500 rounded-md p-2  text-black cursor-pointer"
+                >
+                  view
+                </Link>
+              </div>
+            );
+          },
+        },
+      },
+      {
         name: "orders_date",
         label: "Order date",
         options: {
@@ -80,26 +100,7 @@ const OrderList = () => {
         },
       },
 
-      {
-        name: "id",
-        label: "Action",
-        options: {
-          filter: false,
-          sort: false,
-          customBodyRender: (id) => {
-            return (
-              <div className="flex items-center space-x-2">
-                <Link
-                  to={`/view-order/${id}`}
-                  className="bg-blue-500 rounded-md p-2  text-black cursor-pointer"
-                >
-                  view
-                </Link>
-              </div>
-            );
-          },
-        },
-      },
+      
     ],
     [orderList]
   );

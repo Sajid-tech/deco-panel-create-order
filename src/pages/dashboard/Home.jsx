@@ -174,11 +174,11 @@ const Home = () => {
   const handleUserChange = (event) => {
     const selectedValue = event.target.value;
 
-    // If "Not in List" is selected, navigate to the Create User page
-    if (selectedValue === 45) {  // Assuming the ID for "Not in List" is 45
+   
+    if (selectedValue === 45) { 
       navigate(`/user/${selectedValue}`);
     } else {
-      onInputChange(event); // Continue with the normal onChange handling
+      onInputChange(event);
     }
   };
 
@@ -287,7 +287,7 @@ const Home = () => {
 
         <div className="  mt-2 p-2 md:p-6  ">
           <form id="addIndiv" autoComplete="off">
-            <div className="flex flex-col lg:flex-row gap-4 mb-6 border-2 border-dashed bg-white border-red-200 p-2 rounded-lg shadow-lg">
+            <div className="flex flex-col lg:flex-row gap-4 mb-6 border-2  bg-white border-red-200 p-2 rounded-lg shadow-lg">
 
               <TextField
                 fullWidth
@@ -328,7 +328,7 @@ const Home = () => {
             {/* <hr className="bg-black mb-2" /> */}
 
             {/* Mobile View */}
-            <div className=" md:hidden border-2 border-blue-200 border-dashed bg-white p-2 rounded-lg shadow-lg">
+            <div className=" md:hidden border-2 border-blue-200  bg-white p-2 rounded-lg shadow-lg">
               <div className=" gap-4">
                 {items.map((item, index) => (
                  <div className=" flex flex-col">
@@ -562,7 +562,7 @@ const Home = () => {
               </div>
             </div>
 
-            <div className="flex flex-row mb-10 lg:mb-0 md:flex-row justify-between mt-6 gap-4 border-2 border-dashed bg-white border-purple-200    p-2 rounded-lg shadow-lg">
+            <div className="flex flex-row mb-10 lg:mb-0 md:flex-row justify-between mt-6 gap-4 border-2  bg-white border-purple-200    p-2 rounded-lg shadow-lg">
               <Button
                 variant="contained"
                 color="primary"

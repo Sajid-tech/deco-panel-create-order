@@ -6,10 +6,13 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import OrderList from "./pages/dashboard/OrderList";
 import ViewList from "./pages/dashboard/ViewList";
 import UserCreate from "./pages/dashboard/UserCreate";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   return (
     <>
+    <ToastContainer/>
       <Routes>
         <Route path="/" element={<SignIn />} />
         <Route path="/home" element={<ProtectedRoute element={<Home />} />} />

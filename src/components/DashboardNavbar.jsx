@@ -30,7 +30,7 @@ const DashboardNavbar = () => {
         <div className="flex items-center">
           {/* Settings icon */}
           <IconButton variant="text" color="red" onClick={handleOpenLogout}>
-            <HiArrowRightStartOnRectangle className="h-5 w-5 text-red-500" />
+            <HiArrowRightStartOnRectangle className="h-5 w-5 text-white" />
           </IconButton>
         </div>
       </div>
