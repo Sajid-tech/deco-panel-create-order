@@ -359,7 +359,7 @@ const Home = () => {
                       fullWidth
                       label="Quantity"
                       required
-                      type="digit"
+                      type="number"
                       name="orders_sub_quantity"
                       value={item.orders_sub_quantity}
                       onChange={(e) => onChange(e, index)}
